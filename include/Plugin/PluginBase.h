@@ -4,8 +4,10 @@
 
 #if defined(_WIN32)
 #define PLUGIN_EXPORT __declspec(dllexport)
+#define PLUGIN_IMPORT __declspec(dllimport)
 #else
 #define PLUGIN_EXPORT __attribute__((visibility("default")))
+#define PLUGIN_IMPORT
 #endif
 
 namespace ps {
@@ -21,5 +23,5 @@ class PluginBase {
 };
 }  // namespace ps
 
-typedef ps::PluginBase* (*PluginConstructorFn)();
-typedef void (*PluginDestructorFn)(ps::PluginBase*);
+using PluginConstructor = ps::PluginBase* (*)();
+using PluginDestructor = void (*)(ps::PluginBase*);
